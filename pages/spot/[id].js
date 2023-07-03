@@ -12,24 +12,7 @@ import MovingComponent from 'react-moving-text'
 
 // import leaflet
 import GoogleMapReact from 'google-map-react';
-
-// import share buttons
-import { FacebookShareButton, 
-    FacebookIcon, 
-    TwitterShareButton, 
-    TwitterIcon, 
-    LinkedinShareButton, 
-    LinkedinIcon, 
-    WhatsappShareButton, 
-    WhatsappIcon, 
-    EmailShareButton, 
-    EmailIcon, 
-    PinterestShareButton, 
-    PinterestIcon, 
-    FacebookShareCount,
-    FacebookMessengerShareButton,
-    FacebookMessengerIcon,
-} from 'react-share';
+import SocialShare from '../../components/SingleSpots/SocialShare';
 
 const container = {
     hidden: { opacity: 0 },
@@ -148,81 +131,7 @@ const SingleSpots = ({ user, listing, images }) => {
             ) : (
                 // parse json single_spot json data
                 <section className='listings-details-area pb-70'>
-                    <motion.div
-                        className='breadcumb'
-                        variants={container}
-                        initial='hidden'
-                        animate='visible'
-                    >
-                        <div className='container'>
-                            <div className='row'>
-                                <div className='col-lg-12'>
-                                    <div className='breadcumb-content'>
-                                        <motion.ul
-                                            variants={container}
-                                            initial='hidden'
-                                            animate='visible'
-                                            style={{ 
-                                                display: "flex",
-                                                justifyContent: "left",
-                                                listStyle: "none",
-                                        }}
-                                        >
-                                            <motion.li 
-                                                variants={item}
-                                                style={{
-                                                    fontSize: "16px",
-                                                    textTransform: "uppercase",
-                                                    marginRight: "20px",
-                                                    backgroundColor: "#f7f7f7",
-                                                    padding: "10px",
-                                                    borderRadius: "5px",
-
-                                                }}
-                                                >
-                                                <Link href='/'>
-                                                    <a>Home</a>
-                                                </Link>
-                                            </motion.li>
-                                            <motion.li
-                                                variants={item}
-                                                style={{
-                                                    fontSize: "16px",
-                                                    textTransform: "uppercase",
-                                                    marginRight: "20px",
-                                                    backgroundColor: "#f7f7f7",
-                                                    padding: "10px",
-                                                    borderRadius: "5px",
-                                                }}
-                                            >
-                                                <Link href='/listings'>
-                                                    <a>Spots</a>
-                                                </Link>
-                                            </motion.li>
-                                            <motion.li
-                                                variants={item}
-                                                style={{
-                                                    fontSize: "16px",
-                                                    textTransform: "uppercase",
-                                                    marginRight: "20px",
-                                                    backgroundColor: "#f7f7f7",
-                                                    padding: "10px",
-                                                    borderRadius: "5px",
-                                                }}
-                                            >
-                                                <Link href='/listings'>
-                                                    <a>{listing.listingTitle}</a>
-                                                </Link>
-                                            </motion.li>
-                                        </motion.ul>
-
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </motion.div>
-                
+                    
                     <div className='listings-details-image'>
                         <motion.img
                             src={listing.mainImage}
@@ -355,6 +264,73 @@ const SingleSpots = ({ user, listing, images }) => {
  
         <div className='container'>
           <div className='row'>
+            <motion.div
+              className='breadcrumbs'
+              variants={container}
+              initial='hidden'
+              animate='visible'
+              style={{ 
+                display: "flex",
+                justifyContent: "left",
+                marginBottom: "20px",
+                marginTop: "20px",
+                listStyle: "none",
+              }}
+            >
+              <motion.li
+                variants={item}
+                style={{
+                  fontSize: "16px",
+                  textTransform: "uppercase",
+                  marginRight: "20px",
+                  backgroundColor: "#f7f7f7",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Link href='/'>
+                  <a>Home</a>
+                </Link>
+              </motion.li>
+
+              <motion.li
+                variants={item}
+                autoCorrect='true'
+                style={{
+                  fontSize: "16px",
+                  
+                  marginRight: "20px",
+                  backgroundColor: "#f7f7f7",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Link href='/listings'>
+                  <a>Listings</a>
+                </Link>
+              </motion.li>
+
+              <motion.li
+                variants={item}
+                style={{
+                  fontSize: "16px",
+                  textTransform: "uppercase",
+                  marginRight: "20px",
+                  backgroundColor: "#f7f7f7",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Link href='/listings'>
+                  <a>{listing.listingTitle}</a>
+                </Link>
+              </motion.li>
+
+            </motion.div>
+          </div>
+          <hr />
+
+          <div className='row'>
             <div className='col-lg-8 col-md-12'>
               <div className='listings-details-desc'>
                 <div 
@@ -398,10 +374,10 @@ const SingleSpots = ({ user, listing, images }) => {
                     <h3 className='title'>Amenities</h3>
                     <div className='row'>
                         <div className='col-lg-12 col-md-6'>
-                            {listing.amenities.map((amenity) => (
-                                <span className='badge'>
-                                    <i className='flaticon-check'></i> {amenity.slice(1).toUpperCase()}
-                                </span>
+                            {listing.amenities.map((amenity, index) => (
+                              <span key={index} className='badge'>
+                                <i className='flaticon-check'></i> {amenity.slice(1).toUpperCase() }
+                              </span>
                             ))}
                         </div>
                     </div>
@@ -430,51 +406,12 @@ const SingleSpots = ({ user, listing, images }) => {
                     }}
                 >
                     <h3 className='title'>Share</h3>
-                    <FacebookShareButton 
-                        url={window.location.href}
-                        quote='Check out this spot on SpotBuddy!'
-                        hashtag='#spotbuddy, #spotbuddyapp, #spotbuddyapp.com, #spotbuddyapp.com/spot'
-                        style={{marginRight: "10px"}}>
-                        <FacebookShareCount url={window.location.href}>
-                            {(count) => <span className='myShareCountWrapper'>{count}</span>}
-                        </FacebookShareCount>
-                        <FacebookIcon size={32} round={true} />
-                    </FacebookShareButton>
-                    <TwitterShareButton
-                        url={window.location.href}
-                        title='Check out this spot on SpotBuddy!'
-                        hashtags={['spotbuddy', 'spotbuddyapp', 'spotbuddyapp.com', 'spotbuddyapp.com/spot']}
-                        style={{marginRight: "10px"}}>
-                        <TwitterIcon size={32} round={true} />
-                    </TwitterShareButton>
-                    <LinkedinShareButton
-                        url={`${window.location.href}`}
-                        title='Check out this spot on SpotBuddy!'
-                        hashtags={['spotbuddy', 'spotbuddyapp', 'spotbuddyapp.com', 'spotbuddyapp.com/spot']}
-                        style={{marginRight: "10px"}}>
-                        <LinkedinIcon size={32} round={true} />
-                    </LinkedinShareButton>
-                    <EmailShareButton
-                        url={window.location.href}
-                        subject='Check out this spot on SpotBuddy!'
-                        body='Check out this spot on SpotBuddy!'
-                        style={{marginRight: "10px"}}>
-                        <EmailIcon size={32} round={true} />
-                    </EmailShareButton>
-                    <FacebookMessengerShareButton
-                        url={window.location.href}
-                        appId='521270401588372'
-                        style={{marginRight: "10px"}}>
-                        <FacebookMessengerIcon size={32} round={true} />
-                    </FacebookMessengerShareButton>
+                    <SocialShare 
+                        url={"https://www.google.com"}
+                        title={listing.listingTitle + " Share love with your friends"}
+                        
+                    />
 
-                    <WhatsappShareButton
-                        url={window.location.href}
-                        title='Check out this spot on SpotBuddy!'
-                        hashtags={['spotbuddy', 'spotbuddyapp', 'spotbuddyapp.com', 'spotbuddyapp.com/spot']}
-                        style={{marginRight: "10px"}}>
-                        <WhatsappIcon size={32} round={true} />
-                    </WhatsappShareButton>
                 </motion.div>
    
                 <div id='review'>
